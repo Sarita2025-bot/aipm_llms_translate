@@ -1,0 +1,39 @@
+# Finance RAG Translation System Configuration
+# Copy this to .env and update with your credentials
+
+# MemoQ Server Connection
+MEMOQ_BASE_URL=https://xxxx:8081/memoqserverhttpapi/v1
+MEMOQ_USERNAME=your_username
+MEMOQ_PASSWORD=your_password
+MEMOQ_DOMAIN=
+MEMOQ_TIMEOUT=120
+MEMOQ_VERIFY_SSL=true
+
+# Your TM and TB Names
+MEMOQ_TM_NAME=SV_test_TM_Finance
+MEMOQ_TB_NAME=Finance_TB
+MEMOQ_SRC_LANG=en
+MEMOQ_TGT_LANG=es
+
+# CSV Fallback (your working backup)
+CSV_FALLBACK_FILE=data/en-es_sample_30k.csv
+
+# DNT Configuration
+NON_TRANS_FILE=data/SV_Test_Fund_names2.json
+
+# Vector Index Settings
+VECTOR_MODEL=all-MiniLM-L6-v2
+VECTOR_INDEX_PATH=models/tm_vector_index
+SIMILARITY_THRESHOLD=0.7
+MAX_TM_UNITS=35000
+
+# OpenAI API Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+OPENAI_TEMPERATURE=0
+
+# RAG System Settings
+MAX_TM_RESULTS=5
+MAX_TB_RESULTS=10
+ENABLE_PARALLEL_QUERIES=true
