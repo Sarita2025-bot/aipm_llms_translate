@@ -40,7 +40,7 @@ class LLMTranslator:
     def __init__(self, 
                  api_key: Optional[str] = None,
                  model: str = "gpt-4o",
-                 temperature: float = 5):
+                 temperature: float = 0):
         """
         Initialize LLM translator
         
@@ -80,21 +80,21 @@ class LLMTranslator:
     
     def _get_system_prompt(self) -> str:
         """Get system prompt for the translator"""
-        return """You are an expert financial translator specializing in English to Spanish translation.
+        return """You are a precise financial translator. Translate ONLY the text provided, word by word.
 
-Your task is to translate financial documents with:
-- Perfect preservation of fund names and financial terminology
-- Strict adherence to glossary terms (preferred terms are mandatory)
-- Consistency with translation memory examples
-- Professional financial language
-- Accuracy in numbers, percentages, and dates
+TRANSLATION RULES:
+1. Translate exactly what is given - do NOT add, omit, or modify content
+2. Preserve ALL numbers, percentages, dates exactly
+3. Keep fund names as shown in "DO NOT TRANSLATE" section
+4. Use glossary terms when available
+5. Return ONLY the Spanish translation, nothing else
 
-CRITICAL RULES:
-1. NEVER translate fund names marked as "DO NOT TRANSLATE"
-2. ALWAYS use preferred terms from the glossary
-3. NEVER use forbidden terms
-4. Match the style of translation memory examples
-5. Return ONLY the translation, no explanations or notes"""
+DO NOT:
+- Make up content not in the source
+- Add explanations or notes
+- Summarize or paraphrase
+- Change the meaning
+- Be creative - be ACCURATE"""
     
     def translate_with_rag(self, rag_response: RAGResponse) -> TranslationResult:
         """
@@ -245,7 +245,10 @@ async def main():
     
     # Initialize components
     memoq_config = MemoQConfig.from_env()
-    tm_index = TMVectorIndex("models/tm_vector_index")
+    tm_index = TMVectorIndex(
+        model_name="all-MiniLM-L6-v2",
+        index_path="models/tm_vector_index"
+    )
     tm_index.similarity_threshold = 0.3
     dnt_loader = NonTransLoader("data/SV_Test_Fund_names2.json")
     dnt_loader.load()

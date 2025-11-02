@@ -137,3 +137,11 @@ dmypy.json
 
 # Data 
 data/
+
+# Archived files (old MemoQ integration)
+archive_old_memoq_integration/
+
+# Models (vector indices - too large for git)
+models/
+# Vector index models (large binary files)
+models/tm_vector_index/

@@ -29,11 +29,19 @@ class NonTransLoader:
                     rule = rule.strip()
                     if rule:
                         self.terms.add(rule)
-                        # Also add individual words
-                        words = re.findall(r'\b[A-Za-z][A-Za-z0-9]*\b', rule)
-                        for word in words:
-                            if len(word) > 2:
-                                self.terms.add(word)
+                        # Only add words IF they're part of multi-word terms
+                        # (e.g., "Global Innovation Equity Fund" -> keep as phrase)
+                        # Don't add individual words for single-word fund names only
+                        if len(rule.split()) > 1:
+                            # Multi-word fund name - keep phrases
+                            words = re.findall(r'\b[A-Za-z][A-Za-z0-9]*\b', rule)
+                            for word in words:
+                                # Add words only if they're meaningful (not generic)
+                                if len(word) > 3 and word.lower() not in ['fund', 'portfolio', 'sicav', 'equity', 'equity']:
+                                    self.terms.add(word)
+                        else:
+                            # Single-word fund name - no individual words
+                            pass
             
             self.loaded = True
             print(f"✅ Loaded {len(self.terms)} non-translatable terms")

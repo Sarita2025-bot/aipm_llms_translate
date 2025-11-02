@@ -390,7 +390,10 @@ async def main():
     
     # Initialize components
     memoq_config = MemoQConfig.from_env()
-    tm_index = TMVectorIndex("models/tm_vector_index")  # ✅ UPDATED: Using advanced vector index
+    tm_index = TMVectorIndex(
+        model_name="all-MiniLM-L6-v2",
+        index_path="models/tm_vector_index"
+    )
     dnt_loader = NonTransLoader("data/SV_Test_Fund_names2.json")
     dnt_loader.load()
     
