@@ -25,7 +25,7 @@ This system provides English-to-Spanish translation for financial documents usin
 
 - Python 3.8+
 - OpenAI API key (for GPT-4o)
-- MemoQ server credentials (optional, for TB lookup)
+- MemoQ server credentials (for TB lookup)
 
 ### Installation
 
